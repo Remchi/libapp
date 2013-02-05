@@ -65,3 +65,13 @@ end
 Then /^I should be logged in as "(.*?)" reader$/ do |email|
   expect(page).to have_content("Welcome, #{email}")
 end
+
+
+When /^I go to logout page$/ do
+  visit('/logout')
+end
+
+Then /^I should be logged out$/ do
+  expect(page).not_to have_content('Welcome')
+  expect(page).to have_content('Register')
+end

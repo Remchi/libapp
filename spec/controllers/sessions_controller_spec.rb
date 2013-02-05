@@ -59,5 +59,16 @@ describe SessionsController do
       end
     end
 
+  describe "GET destroy" do
+    it "set's session[:reader_id] to nil" do
+      session[:reader_id] = 1
+      get :destroy
+      expect(session[:reader_id]).to be_nil
+    end
+    it "redirects to home page" do
+      get :destroy
+      expect(response).to redirect_to root_url
+    end
+  end
 
 end
