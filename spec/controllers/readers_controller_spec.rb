@@ -38,6 +38,7 @@ describe ReadersController do
       reader.should_receive(:save)
       post :create, reader: params
     end
+
     context "when save message returns true" do
       before :each do
         reader.stub(:save).and_return(true)
@@ -49,6 +50,22 @@ describe ReadersController do
       it "assings a success flash message" do
         post :create, reader: params
         expect(flash[:notice]).not_to be_nil
+      end
+    end
+
+    context "when save message return false" do
+      before :each do
+        reader.stub(:save).and_return(false)
+        post :create, reader: params
+      end
+      it "renders new template" do
+        expect(response).to render_template :new
+      end
+      it "assigns reader variable to the view" do
+        expect(assigns[:reader]).to eq(reader)
+      end
+      it "assigns error flash message" do
+        expect(flash[:error]).not_to be_nil
       end
     end
   end

@@ -4,9 +4,13 @@ class ReadersController < ApplicationController
   end
 
   def create
-    reader = Reader.new(reader_params)
-    reader.save
-    redirect_to root_url, notice: "You registered"
+    @reader = Reader.new(reader_params)
+    if @reader.save
+      redirect_to root_url, notice: "You registered"
+    else
+      flash.now[:error] = "Something went wrong"
+      render :new
+    end
   end
 
 private
