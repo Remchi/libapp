@@ -1,0 +1,6 @@
+<%= form_for @reader do |f| %>
+  <%= f.email_field :email %>
+  <%= f.password_field :password %>
+  <%= f.password_field :password_confirmation %>
+  <%= f.submit "Register" %>
+<% end %>
