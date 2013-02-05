@@ -7,9 +7,31 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <div class="container">
 
-  <%= top_menu %>
+    <div class="navbar" id="top-menu">
+      <div class="navbar-inner">
+        <%= link_to "Library App", root_url, class: "brand" %>
 
+          <%=raw top_menu %>
+
+      </div>
+    </div>
+
+    <div class="row span6 offset3">
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:error] %>
+        <div class="alert alert-error">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="clear"></div>
 <%= yield %>
 
 </body>
