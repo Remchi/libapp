@@ -28,3 +28,16 @@ end
 Then /^I should not be registered in application$/ do
   expect(Reader.find_by_email('reader')).to be_nil
 end
+
+Then /^I should be logged in$/ do
+  expect(page).to have_content("Welcome, reader01@mail.com")
+end
+
+When /^I go to home page$/ do
+  visit root_url
+end
+
+Then /^I should see guest menu$/ do
+  expect(page).to have_selector("#top-menu")
+  expect(page).to have_link('Register', href: register_path)
+end
