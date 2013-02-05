@@ -19,4 +19,45 @@ describe SessionsController do
     end
   end
 
+  describe "POST create" do
+    let(:params) do
+      {
+        "email" => "email@email.com",
+        "password" => "pass",
+      }
+    end
+    let!(:login) { stub_model(Login) }
+
+    before :each do
+      Login.stub(:new).and_return(login)
+    end
+
+    context "when data is valid" do
+      before :each do
+        login.stub(:valid?).and_return(true)
+      end
+
+      it "sends authenticate message to Login model" do
+        login.should_receive(:authenticate)
+        post :create, login: params
+      end
+
+      context "when authenticate method returns true"
+        before :each do
+          login.stub(:authenticate).and_return(true)
+          post :create, login: params
+        end
+        it "redirects to root url" do
+          expect(response).to redirect_to root_url
+        end
+        it "assings a success flash message" do
+          expect(flash[:notice]).not_to be_nil
+        end
+        it "authenticates reader" do
+          expect(session[:reader_id]).not_to be_nil
+        end
+      end
+    end
+
+
 end
