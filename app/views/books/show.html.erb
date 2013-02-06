@@ -1,0 +1,14 @@
+<div class="row span3">
+  <img id="cover" data-src="holder.js/200x300">
+</div>
+<div class="row span8">
+  <div class="page-header">
+    <h1><%= @book.title %><br><small><%= @book.author %></small></h1>
+  </div>
+  <p class="muted"><%= @book.description %></p>
+  <hr>
+  <p class="pull-right">
+    <%= link_to "Edit", edit_book_path(@book) %>
+    <%= link_to "Delete", book_path(@book), method: :delete, class: "btn btn-danger" %>
+  </p>
+</div>

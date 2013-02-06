@@ -1,14 +1,13 @@
 module ApplicationHelper
 
   def top_menu
-    #result = content_tag(:ul, class: "nav pull-left") do
-    #  content_tag(:li, link_to("Books", books_path))
-    #end
+    result = content_tag(:ul, class: "nav pull-left") do
+      content_tag(:li, link_to("Books", books_path))
+    end
 
-    result = ""
     result += content_tag(:ul, class: "nav pull-right") do
       if current_user
-        items = content_tag(:li, link_to("Welcome, #{current_user.email}", root_path))
+        items = content_tag(:li, link_to("Welcome, #{current_user.email}", root_url))
         items += tag(:li, class: "divider-vertical")
         items += content_tag(:li, link_to("Logout", logout_path))
       else

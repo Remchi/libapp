@@ -1,6 +1,0 @@
-class Reader < ActiveRecord::Base
-  validates :email, presence: true
-  validates :password, presence: true
-  validates :email, email: true
-  attr_accessor :password, :password_confirmation
-end
