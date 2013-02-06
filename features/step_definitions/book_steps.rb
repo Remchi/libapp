@@ -83,3 +83,11 @@ end
 Then /^I should not see "(.*?)" book on library page$/ do |title|
   expect(page).not_to have_content(title)
 end
+
+When /^I go to new book page$/ do
+  visit new_book_path
+end
+
+Then /^I should be redirected to access denied page$/ do
+  expect(current_path).to eq(access_denied_path)
+end

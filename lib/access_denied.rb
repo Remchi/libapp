@@ -1,0 +1,3 @@
+class AccessDenied < StandardError
+
+end

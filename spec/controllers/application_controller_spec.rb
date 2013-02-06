@@ -2,6 +2,19 @@ require 'spec_helper'
 
 describe ApplicationController do
 
+  controller do
+    def index
+      raise AccessDenied
+    end
+  end
+
+  describe "#access_denied" do
+    it "redirects to access denied page" do
+      get :index
+      expect(response).to redirect_to access_denied_path
+    end
+  end
+
   describe "#current_user" do
 
     it "returns nil if reader is not logged in" do

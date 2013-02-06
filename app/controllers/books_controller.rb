@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  before_filter :require_login, only: [ :new, :create ]
   def index
     @books = Book.all
   end
@@ -50,5 +51,9 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :author, :pages, :description)
+  end
+  
+  def require_login
+    raise AccessDenied unless session[:reader_id]
   end
 end
