@@ -29,4 +29,4 @@ gem 'email_validator'
 gem 'active_attr'
 
 gem 'bcrypt-ruby'
-
+gem 'carrierwave'

@@ -1,7 +1,11 @@
 <ul class="thumbnails">
   <% @books.each do |book| %>
     <li class="span4">
-      <img data-src="holder.js/150x200" alt="">
+      <% if book.cover? %>
+        <%= image_tag book.cover.url, width: 150, height: 200 %>
+      <% else %>
+        <%= image_tag "holder.js/150x200" %>
+      <% end %>
       <h3><%= link_to book.title, book_path(book) %></h3>
       <p><%= book.author %></p>
     </li>

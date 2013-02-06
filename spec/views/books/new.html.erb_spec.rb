@@ -18,6 +18,9 @@ describe "books/new.html.erb" do
   it "has book description" do
     expect(rendered).to have_selector("#book_description")
   end
+  it "has book cover" do
+    expect(rendered).to have_selector("#book_cover")
+  end
   it "has book pages" do
     expect(rendered).to have_selector("#book_pages")
   end

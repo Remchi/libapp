@@ -6,6 +6,7 @@ Feature: Create book
     Given I am a "john@reader.com" reader
     When I fill the new book form with valid data
     Then the book should be added to database
+    And book should have cover
     And I should see it on library page
     And "john@reader.com" reader should be the owner of this book
 

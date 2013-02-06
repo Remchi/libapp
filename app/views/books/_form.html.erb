@@ -9,6 +9,9 @@
   <%= f.label :pages %>
   <%= f.number_field :pages, min: 0 %>
 
+  <%= f.label :cover %>
+  <%= f.file_field :cover %>
+
   <%= f.label :description %>
   <%= f.text_area :description, placeholder: "Book description" %>
 

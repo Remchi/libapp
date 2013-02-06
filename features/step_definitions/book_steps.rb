@@ -4,6 +4,7 @@ When /^I fill the new book form with valid data$/ do
   fill_in "book_pages", with: "150"
   fill_in "book_author", with: "William Shakespeare"
   fill_in "book_description", with: "Excellent play!"
+  attach_file "book_cover", "#{Rails.root}/spec/files/hamlet_cover.jpg"
   click_button "Create"
 end
 
@@ -12,6 +13,7 @@ Then /^the book should be added to database$/ do
 end
 
 Then /^I should see it on library page$/ do
+  expect(page).to have_xpath("//img[contains(@src, \"hamlet_cover.jpg\")]")
   expect(page).to have_content("The Hamlet")
 end
 
@@ -126,4 +128,9 @@ end
 When /^I go to edit "(.*?)" book page$/ do |title|
   book = Book.find_by_title(title)
   visit edit_book_path(book)
+end
+
+Then /^book should have cover$/ do
+  book = Book.find_by_title("The Hamlet")
+  expect(book.cover).to have_content("hamlet_cover")
 end

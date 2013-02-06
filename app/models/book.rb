@@ -5,6 +5,8 @@ class Book < ActiveRecord::Base
 
   belongs_to :reader
 
+  mount_uploader :cover, CoverUploader
+
   def owned_by?(owner) 
     if owner && owner.id == reader.id
       true
