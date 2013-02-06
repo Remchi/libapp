@@ -75,3 +75,7 @@ Then /^I should be logged out$/ do
   expect(page).not_to have_content('Welcome')
   expect(page).to have_content('Register')
 end
+
+Then /^I should receive welcome email$/ do
+  expect(unread_emails_for("reader01@mail.com").size).to eq(1)
+end

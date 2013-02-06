@@ -5,6 +5,8 @@ require 'spork'
 
 Spork.prefork do
   require 'cucumber/rails'
+  require 'email_spec'
+  require 'email_spec/cucumber'
   Capybara.default_selector = :css
   ActionController::Base.allow_rescue = false
   begin

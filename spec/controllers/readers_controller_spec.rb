@@ -19,7 +19,7 @@ describe ReadersController do
   end
 
   describe "POST create" do
-    let!(:reader) { stub_model(Reader) }
+    let!(:reader) { stub_model(Reader, params) }
     let(:params) do
       {
         "email" => "email@email.com",
@@ -27,8 +27,10 @@ describe ReadersController do
         "password_confirmation" => "pass"
       }
     end
+    let(:email) { double("Message", deliver: true) }
     before :each do
       Reader.stub(:new).and_return(reader)
+      ReaderMailer.stub(:welcome).and_return(email)
     end
     it "sends new message to Reader class" do
       Reader.should_receive(:new).with(params)
@@ -54,6 +56,11 @@ describe ReadersController do
       it "logs in reader" do
         post :create, reader: params
         expect(session[:reader_id]).to eq(reader.id)
+      end
+      it "delivers welcome email message" do
+        ReaderMailer.should_receive(:welcome).with(params["email"])
+        email.should_receive(:deliver)
+        post :create, reader: params
       end
     end
 

@@ -13,6 +13,7 @@ group :test do
   gem 'capybara', '~> 1.1.1'
   gem 'database_cleaner', '~> 0.9.1'
   gem 'shoulda-matchers'
+  gem 'email_spec'
 end
 
 group :assets do

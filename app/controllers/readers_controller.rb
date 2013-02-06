@@ -6,6 +6,7 @@ class ReadersController < ApplicationController
   def create
     @reader = Reader.new(reader_params)
     if @reader.save
+      ReaderMailer.welcome(@reader.email).deliver
       session[:reader_id] = @reader.id
       redirect_to root_url, notice: "You registered"
     else
