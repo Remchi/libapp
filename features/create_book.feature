@@ -7,6 +7,7 @@ Feature: Create book
     When I fill the new book form with valid data
     Then the book should be added to database
     And I should see it on library page
+    And "john@reader.com" reader should be the owner of this book
 
   Scenario: Try to create new book with empty title as logged in reader
     Given I am a "john@reader.com" reader

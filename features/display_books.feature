@@ -6,7 +6,6 @@ Feature: Display books
     Given book "The Hamlet" exists
     When I go to "The Hamlet" book page
     Then I should see "The Hamlet" book details
-    And I should see "The Hamlet" book edit link
 
   Scenario: Try to view details of nonexistent book
     When I go to nonexistent book page

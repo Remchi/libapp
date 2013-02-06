@@ -91,3 +91,39 @@ end
 Then /^I should be redirected to access denied page$/ do
   expect(current_path).to eq(access_denied_path)
 end
+
+Given /^I am the owner of "(.*?)" book$/ do |title|
+  step "I am a \"rem@email.com\" reader"
+  reader = Reader.find_by_email("rem@email.com")
+  reader.books.create( title: title )
+end
+
+When /^I change "(.*?)" book title to "(.*?)"$/ do |title1, title2|
+  book = Book.find_by_title(title1)
+  visit edit_book_path(book)
+  fill_in "book_title", with: title2
+  click_button "Update"
+end
+
+When /^I delete "(.*?)" book$/ do |title|
+  book = Book.find_by_title(title)
+  visit edit_book_path(book)
+  click_on "Delete"
+end
+
+Then /^"(.*?)" reader should be the owner of this book$/ do |email|
+  book = Book.find_by_title("The Hamlet")
+  reader = Reader.find_by_email(email)
+  expect(book.reader).to eq(reader)
+end
+
+Given /^I am not the owner of "(.*?)" book$/ do |title|
+  step "I am a \"rem@email.com\" reader"
+  bob = Reader.create( email: "bob@email.com", password: "pass", password_confirmation: "pass" )
+  bob.books.create( title: title )
+end
+
+When /^I go to edit "(.*?)" book page$/ do |title|
+  book = Book.find_by_title(title)
+  visit edit_book_path(book)
+end

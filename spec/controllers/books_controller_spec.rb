@@ -96,13 +96,29 @@ describe BooksController do
       Book.stub(:find).and_return(book)
     end
 
-    it "assigns book variable to view" do
-      get :edit, id: book.id
-      expect(assigns[:book]).to eq(book)
+    context "when reader is the owner" do
+      before :each do
+        book.stub(:owned_by?).and_return(true)
+      end
+
+      it "assigns book variable to view" do
+        get :edit, id: book.id
+        expect(assigns[:book]).to eq(book)
+      end
+      it "renders new template" do
+        get :edit, id: book.id
+        expect(response).to render_template :edit
+      end
     end
-    it "renders new template" do
-      get :edit, id: book.id
-      expect(response).to render_template :edit
+
+    context "when reader is not the owner" do
+      before :each do
+        book.stub(:owned_by?).and_return(false)
+      end
+      it "redirects to access denied page" do
+        get :edit, id: book.id
+        expect(response).to redirect_to access_denied_path
+      end
     end
  
   end
@@ -196,6 +212,10 @@ describe BooksController do
         book.should_receive(:save)
         post :create, book: params
       end
+      it "sends reader_id= message to book model" do
+        book.should_receive(:reader_id=).with(1)
+        post :create, book: params
+      end
 
       context "valid data" do
         before :each do
@@ -250,13 +270,30 @@ describe BooksController do
       Book.should_receive(:find).with(book.id.to_s)
       delete :destroy, id: book.id
     end
-    it "sends destroy" do
-      book.should_receive(:destroy)
-      delete :destroy, id: book.id
+
+    context "when reader is the owner" do
+      before :each do
+        book.stub(:owned_by?).and_return(true)
+      end
+      it "sends destroy" do
+        book.should_receive(:destroy)
+        delete :destroy, id: book.id
+      end
+      it "redirects to library page" do
+        delete :destroy, id: book.id
+        expect(response).to redirect_to books_path
+      end
     end
-    it "redirects to library page" do
-      delete :destroy, id: book.id
-      expect(response).to redirect_to books_path
+
+    context "when reader is not the owner" do
+      before :each do
+        book.stub(:owned_by?).and_return(false)
+      end
+      it "redirects to access denied page" do
+        delete :destroy, id: book.id
+        expect(response).to redirect_to access_denied_path
+      end
+
     end
   end
 
